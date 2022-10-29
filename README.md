@@ -52,6 +52,8 @@ Planned features / TODOs:
 
 - `enum`s
 
+- JavaScript-style lambda expressions using a fat arrow (without curly bracket support)
+
 ---
 
 This project uses [LuaMacro by stevedonovan](https://github.com/stevedonovan/LuaMacro).
