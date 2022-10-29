@@ -50,6 +50,8 @@ Planned features / TODOs:
     end
     ```
 
+- `enum`s
+
 ---
 
 This project uses [LuaMacro by stevedonovan](https://github.com/stevedonovan/LuaMacro).
