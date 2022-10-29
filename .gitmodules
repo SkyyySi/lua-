@@ -1,0 +1,3 @@
+[submodule "LuaMacro"]
+	path = LuaMacro
+	url = https://github.com/stevedonovan/LuaMacro

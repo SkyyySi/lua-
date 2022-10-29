@@ -19,11 +19,11 @@ function build() {
 	print_block "script_processed.lua"
 	eval "$(luarocks path --lua-version=5.1)"
 	if [[ -n "${1}" ]]; then
-		luajit ../../LuaMacro/luam -l macros.class script.lua++ -o "${1}"
+		luajit ../LuaMacro/luam -l macros.class script.lua++ -o "${1}"
 	elif command -v bat &> /dev/null; then
-		luajit ../../LuaMacro/luam -d -l macros.class script.lua++ | bat -pp --theme=Dracula --tabs=4 --language=lua
+		luajit ../LuaMacro/luam -d -l macros.class script.lua++ | bat -pp --theme=Dracula --tabs=4 --language=lua
 	else
-		luajit ../../LuaMacro/luam -d -l macros.class script.lua++
+		luajit ../LuaMacro/luam -d -l macros.class script.lua++
 	fi
 	print_line "-"
 }
