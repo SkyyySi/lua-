@@ -1,0 +1,35 @@
+local class FooBar()
+	name = "Tom",
+	age = 34,
+
+	say_hello = function(self)
+		print("Hello, my name is "..self.name.." and I am "..tostring(self.age).." years old.")
+	end,
+end
+
+--[[
+local x = "foo"
+match x do
+	case "foo"|"bar" do
+		print("Foobar!")
+	end
+
+	default do
+		print("No match :(")
+	end
+end
+--]]
+
+local BizBaz = class(SomeParrentClass)
+	buzzer = "it buzzes",
+end
+
+do
+	local a = FooBar()
+	local b = FooBar()
+	print(tostring(FooBar))
+	print(tostring(a))
+	print(tostring(b))
+
+	a:say_hello()
+end
