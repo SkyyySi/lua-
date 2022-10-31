@@ -7,19 +7,6 @@ local class FooBar()
 	end,
 end
 
---[[
-local x = "foo"
-match x do
-	case "foo"|"bar" do
-		print("Foobar!")
-	end
-
-	default do
-		print("No match :(")
-	end
-end
---]]
-
 local BizBaz = class(SomeParrentClass)
 	buzzer = "it buzzes",
 end

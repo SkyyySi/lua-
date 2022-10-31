@@ -2,8 +2,11 @@ local require  = require
 local tostring = tostring
 local math = math
 local setmetatable = setmetatable
+local getmetatable = getmetatable
 local type = type
 local pairs = pairs
+local print = print
+local io = io
 
 -- TODO: Indentation detection
 -- TODO: Make the annonymous syntax the "default" (like how Lua
@@ -92,11 +95,16 @@ macro.define("class", function(get, put)
 		end
 	end
 
-	local namestr = strip(tostring(name))
-	local ret
-	if not is_anon then
-		ret = ([[<@NAME@>
-do
+	local ret = ""
+	local name_str
+	if is_anon then
+		name_str = "<annonymous>"
+	else
+		name_str = strip(tostring(name))
+		ret = name_str.." = "
+	end
+
+	ret = ret..([[(function(class_name)
 	local _class_0
 	local _base_0 = {<@BODY@>}
 	_base_0.__index = _base_0
@@ -105,6 +113,7 @@ do
 		__base = _base_0,
 		__name = "<@NAME@>",
 	}
+	_class_0.__addr = tostring(_class_0):gsub("table:%s*", "")
 	_base_0.__tostring = _base_0.__tostring or function(self)
 		return "<".._class_0.__name.." object at "..self.__meta.mem_addr..">"
 	end
@@ -125,34 +134,10 @@ do
 		end,
 	})
 	_base_0.__class = _class_0
-	<@NAME@> = _class_0
-end]])
-			:gsub("<@NAME@>", namestr)
-			:gsub("<@BODY@>", body)
-	else
-		ret = ([[(function()
-	local _class_0
-	local _base_0 = {<@BODY@>}
-	_base_0.__index = _base_0
-	_class_0 = setmetatable({
-		__init = function(self) end,
-		__base = _base_0,
-		__name = "<annonymous>",
-	}, {
-		__index = _base_0,
-		__call = function(cls, ...)
-			local _self_0 = setmetatable({}, _base_0)
-			cls.__init(_self_0, ...)
-			return _self_0
-		end,
-		__tostring = function(cls)
-			return "<class "..cls.__name..">"
-		end,
-	})
-	_base_0.__class = _class_0
 	return _class_0
 end)()]])
+		:gsub("<@NAME@>", name_str)
 		:gsub("<@BODY@>", body)
-	end
+
 	return ret
 end)

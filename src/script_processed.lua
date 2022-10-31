@@ -1,5 +1,4 @@
-local FooBar
-do
+local FooBar = (function(class_name)
 	local _class_0
 	local _base_0 = {
 
@@ -16,6 +15,7 @@ do
 		__base = _base_0,
 		__name = "FooBar",
 	}
+	_class_0.__addr = tostring(_class_0):gsub("table:%s*", "")
 	_base_0.__tostring = _base_0.__tostring or function(self)
 		return "<".._class_0.__name.." object at "..self.__meta.mem_addr..">"
 	end
@@ -36,42 +36,39 @@ do
 		end,
 	})
 	_base_0.__class = _class_0
-	FooBar = _class_0
-end
+	return _class_0
+end)()
 
---[[
-local x = "foo"
-match x do
-	case "foo"|"bar" do
-		print("Foobar!")
-	end
-
-	default do
-		print("No match :(")
-	end
-end
---]]
-
-local BizBaz = (function()
+local BizBaz = (function(class_name)
 	local _class_0
 	local _base_0 = {
 
 	buzzer = "it buzzes",
 }
 	_base_0.__index = _base_0
-	_class_0 = setmetatable({
+	_class_0 = {
 		__init = function(self) end,
 		__base = _base_0,
 		__name = "<annonymous>",
-	}, {
+	}
+	_class_0.__addr = tostring(_class_0):gsub("table:%s*", "")
+	_base_0.__tostring = _base_0.__tostring or function(self)
+		return "<".._class_0.__name.." object at "..self.__meta.mem_addr..">"
+	end
+	setmetatable(_class_0, {
 		__index = _base_0,
 		__call = function(cls, ...)
-			local _self_0 = setmetatable({}, _base_0)
+			local obj = {}
+			local addr = tostring(obj):gsub("table:%s*", "")
+			obj.__meta = {
+				mem_addr = addr,
+			}
+			local _self_0 = setmetatable(obj, _base_0)
 			cls.__init(_self_0, ...)
 			return _self_0
 		end,
 		__tostring = function(cls)
-			return "<class "..cls.__name..">"
+			return "<class '"..cls.__name.."'>"
 		end,
 	})
 	_base_0.__class = _class_0

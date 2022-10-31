@@ -1,0 +1,40 @@
+local Lambda = {}
+do
+	function Lambda:__call(...)
+		return self:fn(...)
+	end
+
+	function Lambda:__tostring()
+		return self.signature
+	end
+
+	local mt = {}
+	mt.__index = mt
+	setmetatable(Lambda, mt)
+
+	function mt:__call(fn, signature)
+		local obj = {}
+		obj.fn = fn
+		obj.signature = signature
+		setmetatable(obj, self)
+		return obj
+	end
+end
+
+local f = x => { x * x }
+
+local g = (a, b) => { a + b }
+
+local h = () => { "foo\nbar" }
+
+local long = () => {
+	"Multiple lines are valid, too!"
+}
+
+local function do_smth(fn)
+	return fn(7)
+end
+
+print(f(5))
+print(do_smth(x => { x * 2 }))
+print(f)
